@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}InfoStream - Live News{% endblock %}
+{% block body %}
+<nav class="navbar navbar-expand-lg sticky-top app-navbar border-bottom">
+  <div class="container-fluid container-xl py-2">
+    <a class="navbar-brand fw-bold" href="/">InfoStream</a>
+    <div class="d-flex align-items-center gap-2 ms-auto">
+      <button id="modeLight" class="btn btn-sm btn-outline-secondary">🌞 Light</button>
+      <button id="modeDark" class="btn btn-sm btn-outline-secondary">🌙 Dark</button>
+      <button id="modeRead" class="btn btn-sm btn-outline-secondary">📖 Reading</button>
+      <div class="font-size-controls d-flex align-items-center gap-1 ms-2">
+        <button id="fontDec" class="btn btn-sm btn-outline-secondary">A-</button>
+        <button id="fontInc" class="btn btn-sm btn-outline-secondary">A+</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="container-xl py-4">
+  <section class="controls card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-12 col-lg-5">
+          <input id="searchInput" class="form-control" type="search" placeholder="Search by title or summary..." />
+        </div>
+        <div class="col-6 col-lg-3">
+          <select id="sourceFilter" class="form-select">
+            <option value="all">All sources</option>
+          </select>
+        </div>
+        <div class="col-6 col-lg-2">
+          <select id="sortOrder" class="form-select">
+            <option value="latest">Latest first</option>
+            <option value="oldest">Oldest first</option>
+          </select>
+        </div>
+        <div class="col-12 col-lg-2 d-grid">
+          <button id="refreshBtn" class="btn btn-primary">Refresh</button>
+        </div>
+      </div>
+      <div class="meta-row mt-3 d-flex flex-wrap gap-3 small text-secondary">
+        <span id="articleCount">Loading articles...</span>
+        <span id="lastUpdated"></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="errorState" class="alert alert-danger d-none" role="alert"></section>
+  <section id="emptyState" class="card border-0 shadow-sm d-none">
+    <div class="card-body text-center py-5">
+      <h5 class="mb-2">No articles found</h5>
+      <p class="text-secondary mb-0">Try changing search, source filter, or sort options.</p>
+    </div>
+  </section>
+  <section id="loadingState" class="row g-3 mb-3"></section>
+  <section id="newsGrid" class="row g-3"></section>
+
+  <div class="d-grid my-4">
+    <button id="loadMoreBtn" class="btn btn-outline-primary d-none">Load more</button>
+  </div>
+</main>
+
+<div class="modal fade" id="readerModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="readerTitle" class="modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p id="readerMeta" class="small text-secondary"></p>
+        <article id="readerContent" class="reader-content"></article>
+      </div>
+      <div class="modal-footer">
+        <a id="readerLink" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open original</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
